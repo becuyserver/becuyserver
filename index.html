@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>整合包文档</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            min-height: 100vh;
+        }
+        
+        /* 左侧导航样式 */
+        .sidebar {
+            width: 280px;
+            background: #fff;
+            border-right: 1px solid #eaeaea;
+            padding: 30px 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .nav-section {
+            padding: 0 20px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .nav-item {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-item:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .nav-item.active {
+            background-color: #e3f2fd;
+            color: #1a73e8;
+            font-weight: 500;
+        }
+        
+        .nav-item i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        /* 右侧内容区域 */
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        
+        .content-section {
+            margin-bottom: 50px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .section-content {
+            background: #fafbfc;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            margin-bottom: 25px;
+        }
+        
+        .content-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .content-text {
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        .key-list {
+            list-style-type: none;
+        }
+        
+        .key-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: #fff;
+            border-left: 3px solid #3498db;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .key-name {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .key-desc {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .team-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .team-member {
+            flex: 1;
+            min-width: 200px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e3f2fd;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #3498db;
+        }
+        
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .member-role {
+            color: #3498db;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .member-desc {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-right: none;
+                border-bottom: 1px solid #eaeaea;
+            }
+            
+            .content {
+                padding: 25px;
+            }
+            
+            .team-member {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧导航 -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>整合包文档</h1>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">文档导航</div>
+                <div class="nav-item active" data-target="section1">
+                    <i>📋</i> 整合包说明
+                </div>
+                <div class="nav-item" data-target="section2">
+                    <i>⌨️</i> 整合包按键说明
+                </div>
+                <div class="nav-item" data-target="section3">
+                    <i>👥</i> 整合包制作团队
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧内容区域 -->
+        <div class="content">
+            <!-- 整合包说明 -->
+            <div class="content-section" id="section1">
+                <h2 class="section-title">整合包说明</h2>
+                
+                <div class="section-content">
+                    <h3 class="content-title">整合包介绍</h3>
+                    <p class="content-text">
+                        此整合包是为《我的世界》游戏精心打造的全新体验版本，集合了超过100个精选模组，
+                        优化了游戏性能，并提供了独特的游戏玩法。整合包专注于冒险、科技与魔法元素的平衡结合，
+                        为玩家提供沉浸式的游戏体验。
+                    </p>
+                </div>
+                
+                <div class="section-content">
+                    <h3 class="content-title">主要特点</h3>
+                    <p class="content-text">
+                        • 优化的游戏性能：即使在低配电脑上也能流畅运行<br>
+                        • 独特的任务系统：引导玩家体验整合包的全部内容<br>
+                        • 平衡的游戏机制：精心调整模组间的平衡性<br>
+                        • 视觉增强：高清纹理和光影效果提升视觉体验<br>
+                        • 自动化支持：丰富的科技模组满足自动化需求
+                    </p>
+                </div>
+                
+                <div class="section-content">
+                    <h3 class="content-title">系统要求</h3>
+                    <p class="content-text">
+                        <strong>最低配置：</strong><br>
+                        • 操作系统: Windows 10 64位<br>
+                        • 处理器: Intel i5 或同等性能处理器<br>
+                        • 内存: 8GB RAM<br>
+                        • 显卡: NVIDIA GTX 750Ti 或同等性能显卡<br>
+                        <br>
+                        <strong>推荐配置：</strong><br>
+                        • 操作系统: Windows 10/11 64位<br>
+                        • 处理器: Intel i7 或同等性能处理器<br>
+                        • 内存: 16GB RAM<br>
+                        • 显卡: NVIDIA GTX 1060 或更高
+                    </p>
+                </div>
+            </div>
+            
+            <!-- 整合包按键说明 -->
+            <div class="content-section" id="section2" style="display: none;">
+                <h2 class="section-title">整合包按键说明</h2>
+                
+                <div class="section-content">
+                    <h3 class="content-title">核心快捷键</h3>
+                    <ul class="key-list">
+                        <li class="key-item">
+                            <div class="key-name">M 键</div>
+                            <div class="key-desc">打开小地图设置界面，可调整地图大小、位置和显示内容</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">J 键</div>
+                            <div class="key-desc">打开任务系统界面，查看当前任务进度和奖励</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">U 键</div>
+                            <div class="key-desc">打开游戏内百科，查询模组物品的合成方式和用途</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">R 键</div>
+                            <div class="key-desc">查看物品合成表（将鼠标悬停在物品上按R键）</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="section-content">
+                    <h3 class="content-title">工具类快捷键</h3>
+                    <ul class="key-list">
+                        <li class="key-item">
+                            <div class="key-name">G 键</div>
+                            <div class="key-desc">打开/关闭游戏设置菜单</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">V 键</div>
+                            <div class="key-desc">打开物品管理器，搜索和定位背包中的物品</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">X 键</div>
+                            <div class="key-desc">打开经验管理界面，将经验储存到经验之书中</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">C 键</div>
+                            <div class="key-desc">打开技能树界面，查看和升级角色技能</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="section-content">
+                    <h3 class="content-title">其他重要按键</h3>
+                    <ul class="key-list">
+                        <li class="key-item">
+                            <div class="key-name">F7</div>
+                            <div class="key-desc">显示光照等级，红色表示怪物可生成区域</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">F9</div>
+                            <div class="key-desc">切换小地图类型（圆形、方形、缩略图）</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">Ctrl + O</div>
+                            <div class="key-desc">打开游戏优化设置，调整内存分配等高级选项</div>
+                        </li>
+                        <li class="key-item">
+                            <div class="key-name">Alt + F</div>
+                            <div class="key-desc">打开快速建造菜单，选择预设建筑结构</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 整合包制作团队 -->
+            <div class="content-section" id="section3" style="display: none;">
+                <h2 class="section-title">整合包制作团队</h2>
+                
+                <div class="section-content">
+                    <h3 class="content-title">核心开发团队</h3>
+                    <div class="team-container">
+                        <div class="team-member">
+                            <div class="member-avatar">A</div>
+                            <div class="member-name">Alex Chen</div>
+                            <div class="member-role">项目负责人</div>
+                            <div class="member-desc">负责整体规划和模组整合，确保游戏平衡性</div>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="member-avatar">S</div>
+                            <div class="member-name">Sam Wang</div>
+                            <div class="member-role">技术开发</div>
+                            <div class="member-desc">负责脚本编写和核心模组配置</div>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="member-avatar">M</div>
+                            <div class="member-name">Mia Zhang</div>
+                            <div class="member-role">美术设计</div>
+                            <div class="member-desc">制作纹理包、界面设计和视觉效果优化</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-content">
+                    <h3 class="content-title">测试与支持团队</h3>
+                    <div class="team-container">
+                        <div class="team-member">
+                            <div class="member-avatar">T</div>
+                            <div class="member-name">Tom Liu</div>
+                            <div class="member-role">首席测试</div>
+                            <div class="member-desc">进行游戏测试，发现并报告问题</div>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="member-avatar">J</div>
+                            <div class="member-name">Jenny Zhao</div>
+                            <div class="member-role">社区管理</div>
+                            <div class="member-desc">管理社区，收集玩家反馈和建议</div>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="member-avatar">K</div>
+                            <div class="member-name">Kevin Li</div>
+                            <div class="member-role">文档编写</div>
+                            <div class="member-desc">编写游戏指南、教程和文档</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-content">
+                    <h3 class="content-title">特别鸣谢</h3>
+                    <p class="content-text">
+                        感谢所有模组开发者提供的优秀模组，特别感谢社区成员提供的宝贵反馈和建议。
+                        同时也感谢以下组织对我们的支持：
+                    </p>
+                    <p class="content-text">
+                        • BECUY服务器技术部部长
+                        • BECUY服务器腐竹
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            // 默认显示第一部分
+            document.getElementById('section1').style.display = 'block';
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    
+                    // 更新导航激活状态
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 显示对应内容区域
+                    contentSections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(targetId).style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
